@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Menu — BeiSmart</title>
+ <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+ <div class="app-shell">
+   <aside class="sidebar">
+     <a class="brand" href="dashboard.html">
+       <span class="brand-mark"></span>
+       <span data-i18n="brand">BeiSmart</span>
+     </a>
+     <nav class="side-nav">
+       <a class="active" href="dashboard.html" data-i18n="dashboard">Menu</a>
+       <a href="calculate.html" data-i18n="calculate">Price calculator</a>
+       <a href="records.html" data-i18n="records">Saved records</a>
+       <a href="account.html" data-i18n="account">My account</a>
+       <a href="#" onclick="logoutUser(); return false;" data-i18n="logout">Log out</a>
+     </nav>
+   </aside>
+   <main class="main">
+     <div class="main-top">
+       <h1><span data-i18n="welcome">Welcome</span>, <span id="greetName">vendor</span></h1>
+       <button class="btn btn-cyan" type="button" onclick="toggleLang()" id="langLabel">SW</button>
+     </div>
+     <p class="muted" data-i18n="dashIntro">Choose a task from the menu.</p>
+     <div class="cards">
+       <div class="stat teal">
+         <span data-i18n="records">Saved records</span>
+         <strong id="statCount">0</strong>
+       </div>
+       <div class="stat">
+         <span data-i18n="profit">Profit</span>
+         <strong id="statProfit">TZS 0</strong>
+       </div>
+       <div class="stat cyan">
+         <span data-i18n="language">Language</span>
+         <strong id="langStat">EN</strong>
+       </div>
+     </div>
+     <div class="panel">
+       <h2 data-i18n="dashboard">Menu</h2>
+       <p class="muted">Week 2 structure: menu, flow, then prompts.</p>
+       <div class="form-actions">
+         <a class="btn btn-pink" href="calculate.html" data-i18n="calculate">Price calculator</a>
+         <a class="btn btn-cyan" href="records.html" data-i18n="records">Saved records</a>
+         <a class="btn btn-ghost" href="account.html" data-i18n="account">My account</a>
+       </div>
+     </div>
+   </main>
+ </div>
+ <script src="js/storage.js"></script>
+ <script src="js/lang.js"></script>
+ <script src="js/auth.js"></script>
+ <script src="js/app.js"></script>
+ <script>
+   requireLogin();
+   applyLang();
+   greetUser();
+   updateStats();
+   document.getElementById("langStat").textContent = currentLang().toUpperCase();
+ </script>
+</body>
+</html>

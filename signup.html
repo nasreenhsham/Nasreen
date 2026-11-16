@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Sign up — Bei Sahihi</title>
+ <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+ <div class="auth-layout">
+   <div class="auth-art">
+     <span class="blob blob-cyan" style="width:200px;height:200px;top:20px;right:20px;"></span>
+     <span class="blob blob-pink" style="width:160px;height:160px;bottom:40px;left:20px;"></span>
+     <a class="brand" href="index.html">
+       <span class="brand-mark"></span>
+       <span data-i18n="brand">Bei Sahihi</span>
+     </a>
+     <h1 data-i18n="heroTitle">Price your goods with a clear formula.</h1>
+     <p style="margin-top:12px;" data-i18n="weekLabel">Student sample — Weeks 1 to 9</p>
+   </div>
+   <div class="auth-form-side">
+     <form class="panel" onsubmit="handleSignup(event)">
+       <h2 data-i18n="signup">Sign up</h2>
+       <p class="muted">Open an account so your records stay under your name.</p>
+       <div id="errorBox" class="error"></div>
+       <label data-i18n="name">Full name</label>
+       <input id="name" type="text" required>
+       <label data-i18n="email">Email</label>
+       <input id="email" type="email" required>
+       <label data-i18n="password">Password</label>
+       <input id="password" type="password" required>
+       <label data-i18n="market">Market / area</label>
+       <select id="market">
+         <option value="Kariakoo">Kariakoo</option>
+         <option value="Mwenge">Mwenge</option>
+         <option value="Temeke">Temeke</option>
+         <option value="Mwananyamala">Mwananyamala</option>
+         <option value="Other">Other</option>
+       </select>
+       <div class="form-actions">
+         <button class="btn btn-pink" type="submit" data-i18n="signup">Sign up</button>
+         <button class="btn btn-ghost" type="button" onclick="toggleLang()" id="langLabel">SW</button>
+       </div>
+       <p style="margin-top:16px;"><a href="signin.html" data-i18n="haveAccount">Already have an account? Sign in</a></p>
+     </form>
+   </div>
+ </div>
+ <script src="js/storage.js"></script>
+ <script src="js/lang.js"></script>
+ <script src="js/auth.js"></script>
+ <script>applyLang();</script>
+</body>
+</html>

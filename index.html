@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>BeiSmart — vendor pricing</title>
+ <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+ <!-- HOME -->
+ <div id="screen-home" class="screen page show">
+   <span class="blob blob-cyan" style="width:220px;height:220px;top:-40px;left:-50px;"></span>
+   <span class="blob blob-pink" style="width:180px;height:180px;top:80px;right:-40px;"></span>
+   <div class="wrap">
+     <header class="topbar">
+       <button class="brand" type="button" onclick="go('home')">
+         <span class="brand-mark"></span>
+         <span data-i18n="brand">BeiSmart</span>
+       </button>
+       <nav class="nav-links">
+         <button type="button" onclick="go('home')" data-i18n="home">Home</button>
+         <button type="button" onclick="go('signin')" data-i18n="signin">Sign in</button>
+         <button type="button" onclick="go('signup')" data-i18n="signup">Sign up</button>
+         <button class="lang-btn" id="langHome" type="button" onclick="toggleLang()">SW</button>
+       </nav>
+     </header>
+     <section class="hero">
+       <div>
+         <span class="kicker" data-i18n="kicker">Dar es Salaam informal vendors</span>
+         <h1 data-i18n="heroTitle">Price your goods with a clear formula.</h1>
+         <p data-i18n="heroText">Enter purchase price, transport cost and the profit you want. The program calculates a selling price you can explain to a customer.</p>
+         <div class="hero-actions">
+           <button class="btn btn-pink" type="button" onclick="go('signup')" data-i18n="start">Create account</button>
+           <button class="btn btn-cyan" type="button" onclick="go('signin')" data-i18n="signin">Sign in</button>
+         </div>
+       </div>
+       <div class="stall" aria-hidden="true">
+         <div class="price-tag">TZS 2,500</div>
+         <div class="stall-roof"></div>
+         <div class="stall-post left"></div>
+         <div class="stall-post right"></div>
+         <div class="fruit one"></div>
+         <div class="fruit two"></div>
+         <div class="fruit three"></div>
+         <div class="fruit four"></div>
+         <div class="fruit five"></div>
+         <div class="stall-table"></div>
+       </div>
+     </section>
+     <div class="steps">
+       <div class="step"><b>1.</b> Sign up with your name and market.</div>
+       <div class="step"><b>2.</b> Enter purchase, transport and profit.</div>
+       <div class="step"><b>3.</b> Save records and download a CSV file.</div>
+     </div>
+     <p class="footer-note">Open this file in VS Code, then use Live Server. Demo login: vendor@dsm.tz / 123456</p>
+   </div>
+ </div>
+
+ <!-- SIGN UP -->
+ <div id="screen-signup" class="screen auth-layout">
+   <div class="auth-art">
+     <span class="blob blob-cyan" style="width:200px;height:200px;top:20px;right:20px;"></span>
+     <button class="brand" type="button" onclick="go('home')">
+       <span class="brand-mark"></span>
+       <span data-i18n="brand">BeiSmart</span>
+     </button>
+     <h1 data-i18n="heroTitle">Price your goods with a clear formula.</h1>
+   </div>
+   <div class="auth-form-side">
+     <form class="panel" onsubmit="doSignup(event)">
+       <h2 data-i18n="signup">Sign up</h2>
+       <p class="muted">Create an account so your records stay under your name.</p>
+       <div id="signupError" class="error"></div>
+       <label data-i18n="name">Full name</label>
+       <input id="signupName" type="text">
+       <label data-i18n="email">Email</label>
+       <input id="signupEmail" type="email">
+       <label data-i18n="password">Password</label>
+       <input id="signupPassword" type="password">
+       <label data-i18n="market">Market / area</label>
+       <select id="signupMarket">
+         <option value="Kariakoo">Kariakoo</option>
+         <option value="Mwenge">Mwenge</option>
+         <option value="Temeke">Temeke</option>
+         <option value="Mwananyamala">Mwananyamala</option>
+         <option value="Other">Other</option>
+       </select>
+       <div class="form-actions">
+         <button class="btn btn-pink" type="submit" data-i18n="signup">Sign up</button>
+         <button class="btn btn-ghost" type="button" onclick="toggleLang()">SW / EN</button>
+       </div>
+       <p style="margin-top:16px;"><button type="button" onclick="go('signin')" data-i18n="haveAccount">Already have an account? Sign in</button></p>
+     </form>
+   </div>
+ </div>
+
+ <!-- SIGN IN -->
+ <div id="screen-signin" class="screen auth-layout">
+   <div class="auth-art">
+     <span class="blob blob-pink" style="width:210px;height:210px;top:30px;left:40px;"></span>
+     <button class="brand" type="button" onclick="go('home')">
+       <span class="brand-mark"></span>
+       <span data-i18n="brand">BeiSmart</span>
+     </button>
+     <h1 data-i18n="welcome">Welcome</h1>
+     <p style="margin-top:12px;">Kariakoo · Mwenge · Temeke</p>
+   </div>
+   <div class="auth-form-side">
+     <form class="panel" onsubmit="doSignin(event)">
+       <h2 data-i18n="signin">Sign in</h2>
+       <p class="hint">Demo account already inside the program:<br>vendor@dsm.tz<br>password: 123456</p>
+       <div id="signinError" class="error"></div>
+       <label data-i18n="email">Email</label>
+       <input id="signinEmail" type="email" value="vendor@dsm.tz">
+       <label data-i18n="password">Password</label>
+       <input id="signinPassword" type="password" value="123456">
+       <div class="form-actions">
+         <button class="btn btn-pink" type="submit" data-i18n="signin">Sign in</button>
+         <button class="btn btn-ghost" type="button" onclick="toggleLang()">SW / EN</button>
+       </div>
+       <p style="margin-top:16px;"><button type="button" onclick="go('signup')" data-i18n="noAccount">New here? Create an account</button></p>
+     </form>
+   </div>
+ </div>
+
+ <!-- LOGGED-IN APP -->
+ <div id="screen-app" class="screen app-shell">
+   <aside class="sidebar">
+     <button class="brand" type="button" onclick="go('menu')">
+       <span class="brand-mark"></span>
+       <span data-i18n="brand">BeiSmart</span>
+     </button>
+     <nav class="side-nav">
+       <a id="nav-menu" href="#" onclick="go('menu'); return false;" data-i18n="dashboard">Menu</a>
+       <a id="nav-calculate" href="#" onclick="go('calculate'); return false;" data-i18n="calculate">Price calculator</a>
+       <a id="nav-records" href="#" onclick="go('records'); return false;" data-i18n="records">Saved records</a>
+       <a id="nav-account" href="#" onclick="go('account'); return false;" data-i18n="account">My account</a>
+       <a href="#" onclick="doLogout(); return false;" data-i18n="logout">Log out</a>
+     </nav>
+   </aside>
+   <main class="main">
+     <div class="main-top">
+       <h1 id="pageTitle">Menu</h1>
+       <button class="btn btn-cyan" type="button" onclick="toggleLang()">SW / EN</button>
+     </div>
+
+     <div id="view-menu" class="view">
+       <p class="muted" data-i18n="dashIntro">Choose a task from the menu.</p>
+       <div class="cards">
+         <div class="stat teal">
+           <span data-i18n="records">Saved records</span>
+           <strong id="statCount">0</strong>
+         </div>
+         <div class="stat">
+           <span data-i18n="profit">Profit</span>
+           <strong id="statProfit">TZS 0</strong>
+         </div>
+         <div class="stat cyan">
+           <span data-i18n="welcome">Welcome</span>
+           <strong id="greetName">vendor</strong>
+         </div>
+       </div>
+       <div class="panel">
+         <h2 data-i18n="dashboard">Menu</h2>
+         <div class="form-actions">
+           <button class="btn btn-pink" type="button" onclick="go('calculate')" data-i18n="calculate">Price calculator</button>
+           <button class="btn btn-cyan" type="button" onclick="go('records')" data-i18n="records">Saved records</button>
+           <button class="btn btn-ghost" type="button" onclick="go('account')" data-i18n="account">My account</button>
+         </div>
+       </div>
+     </div>
+
+     <div id="view-calculate" class="view">
+       <div class="panel">
+         <p class="muted" data-i18n="calcHelp">Selling price = purchase + transport + profit.</p>
+         <div id="calcError" class="error"></div>
+         <div id="calcSuccess" class="success"></div>
+         <label data-i18n="item">Item name</label>
+         <input id="item" type="text">
+         <div class="row-2">
+           <div>
+             <label data-i18n="purchase">Purchase price (TZS)</label>
+             <input id="purchase" type="number" min="0" step="1">
+           </div>
+           <div>
+             <label data-i18n="transport">Transport cost (TZS)</label>
+             <input id="transport" type="number" min="0" step="1">
+           </div>
+         </div>
+         <div class="row-2">
+           <div>
+             <label data-i18n="profitType">Profit type</label>
+             <select id="profitType">
+               <option value="amount">TZS</option>
+               <option value="percent">%</option>
+             </select>
+           </div>
+           <div>
+             <label data-i18n="desiredProfit">Desired profit</label>
+             <input id="desiredProfit" type="number" min="0" step="1">
+           </div>
+         </div>
+         <div class="form-actions">
+           <button class="btn btn-pink" type="button" onclick="calculatePrice()" data-i18n="compute">Calculate selling price</button>
+           <button class="btn btn-cyan" type="button" onclick="saveLastCalc()" data-i18n="saveRecord">Save this record</button>
+         </div>
+         <div id="resultBox" class="result-box" style="display:none;">
+           <h3>Result</h3>
+           <div class="result-grid">
+             <p><span data-i18n="totalCost">Total cost</span><br><strong id="outCost">TZS 0</strong></p>
+             <p><span data-i18n="sellingPrice">Suggested selling price</span><br><strong id="outSell">TZS 0</strong></p>
+             <p><span data-i18n="profit">Profit</span><br><strong id="outProfit">TZS 0</strong></p>
+           </div>
+         </div>
+       </div>
+     </div>
+
+     <div id="view-records" class="view">
+       <p class="muted" data-i18n="recHelp">Records are stored on this computer.</p>
+       <div id="recSuccess" class="success"></div>
+       <div class="panel" style="margin-bottom:16px;">
+         <label data-i18n="search">Search item</label>
+         <input id="search" type="text" oninput="renderRecords(this.value)">
+         <div class="form-actions">
+           <button class="btn btn-pink" type="button" onclick="exportRecords()" data-i18n="exportCsv">Download CSV</button>
+           <label class="btn btn-ghost" style="margin:0;">
+             <span data-i18n="importCsv">Load CSV file</span>
+             <input type="file" accept=".csv,text/csv" style="display:none;" onchange="importRecords(event)">
+           </label>
+         </div>
+       </div>
+       <p id="emptyRecords" class="muted" data-i18n="noRecords">No records yet.</p>
+       <div style="overflow-x:auto;">
+         <table>
+           <thead>
+             <tr>
+               <th>Date</th>
+               <th data-i18n="item">Item</th>
+               <th data-i18n="purchase">Purchase</th>
+               <th data-i18n="transport">Transport</th>
+               <th data-i18n="sellingPrice">Selling</th>
+               <th data-i18n="profit">Profit</th>
+               <th></th>
+             </tr>
+           </thead>
+           <tbody id="recordRows"></tbody>
+         </table>
+       </div>
+     </div>
+
+     <div id="view-account" class="view">
+       <form class="panel" onsubmit="saveAccount(event)">
+         <div id="accError" class="error"></div>
+         <div id="accSuccess" class="success"></div>
+         <label data-i18n="name">Full name</label>
+         <input id="accName" type="text">
+         <label data-i18n="email">Email</label>
+         <input id="accEmail" type="email" readonly>
+         <label data-i18n="location">Where you sell</label>
+         <select id="accMarket">
+           <option value="Kariakoo">Kariakoo</option>
+           <option value="Mwenge">Mwenge</option>
+           <option value="Temeke">Temeke</option>
+           <option value="Mwananyamala">Mwananyamala</option>
+           <option value="Other">Other</option>
+         </select>
+         <label data-i18n="password">Password</label>
+         <input id="accPassword" type="password" placeholder="Leave blank to keep the same password">
+         <label data-i18n="notes">Notes from vendors / feedback</label>
+         <textarea id="accNotes" rows="4"></textarea>
+         <div class="form-actions">
+           <button class="btn btn-pink" type="submit" data-i18n="saveAccount">Save account details</button>
+           <button class="btn btn-ghost" type="button" onclick="doLogout()" data-i18n="logout">Log out</button>
+         </div>
+       </form>
+     </div>
+   </main>
+ </div>
+
+ <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Records — Bei Sahihi</title>
+ <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+ <div class="app-shell">
+   <aside class="sidebar">
+     <a class="brand" href="dashboard.html">
+       <span class="brand-mark"></span>
+       <span data-i18n="brand">Bei Sahihi</span>
+     </a>
+     <nav class="side-nav">
+       <a href="dashboard.html" data-i18n="dashboard">Menu</a>
+       <a href="calculate.html" data-i18n="calculate">Price calculator</a>
+       <a class="active" href="records.html" data-i18n="records">Saved records</a>
+       <a href="account.html" data-i18n="account">My account</a>
+       <a href="#" onclick="logoutUser(); return false;" data-i18n="logout">Log out</a>
+     </nav>
+   </aside>
+   <main class="main">
+     <div class="main-top">
+       <h1 data-i18n="records">Saved records</h1>
+       <button class="btn btn-cyan" type="button" onclick="toggleLang()" id="langLabel">SW</button>
+     </div>
+     <p class="muted" data-i18n="recHelp">Records are stored on this computer.</p>
+     <div id="successBox" class="success"></div>
+     <div class="panel" style="margin-bottom:16px;">
+       <div class="row-2">
+         <div>
+           <label data-i18n="search">Search item</label>
+           <input id="search" type="text" oninput="renderRecords(this.value)">
+         </div>
+         <div>
+           <label>&nbsp;</label>
+           <div class="form-actions">
+             <button class="btn btn-pink" type="button" onclick="exportRecords()" data-i18n="exportCsv">Download CSV</button>
+             <label class="btn btn-ghost" style="margin:0;">
+               <span data-i18n="importCsv">Load CSV file</span>
+               <input type="file" accept=".csv,text/csv" style="display:none;" onchange="importRecords(event)">
+             </label>
+           </div>
+         </div>
+       </div>
+     </div>
+     <p id="emptyRecords" class="muted" data-i18n="noRecords">No records yet.</p>
+     <div style="overflow-x:auto;">
+       <table>
+         <thead>
+           <tr>
+             <th>Date</th>
+             <th data-i18n="item">Item</th>
+             <th data-i18n="purchase">Purchase</th>
+             <th data-i18n="transport">Transport</th>
+             <th data-i18n="sellingPrice">Selling</th>
+             <th data-i18n="profit">Profit</th>
+             <th></th>
+           </tr>
+         </thead>
+         <tbody id="recordRows"></tbody>
+       </table>
+     </div>
+   </main>
+ </div>
+ <script src="js/storage.js"></script>
+ <script src="js/lang.js"></script>
+ <script src="js/auth.js"></script>
+ <script src="js/app.js"></script>
+ <script>
+   requireLogin();
+   applyLang();
+   renderRecords("");
+ </script>
+</body>
+</html>

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vendor Pricing System</title>
+<style>
+  :root {
+    --primary-teal: #069494;
+    --accent-pink: #FF69B4;
+    --cyan-highlight: #00F0FF;
+    --bg-white: #FFFFFF;
+    --text-dark: #222222;
+  }
+
+
+  * {
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+
+  body {
+    background-color: #f4f7f6;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+  }
+
+
+  .app-container {
+    background-color: var(--bg-white);
+    width: 100%;
+    max-width: 480px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    overflow: hidden;
+  }
+
+
+  header {
+    background-color: var(--primary-teal);
+    color: var(--bg-white);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+
+  header h1 {
+    font-size: 1.1rem;
+  }
+
+
+  .lang-btn {
+    background-color: var(--cyan-highlight);
+    color: var(--text-dark);
+    border: none;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 0.8rem;
+  }
+
+
+  .nav-tabs {
+    display: flex;
+    background-color: #e0e0e0;
+  }
+
+
+  .tab-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    background: none;
+    font-weight: bold;
+    color: var(--text-dark);
+    cursor: pointer;
+  }
+
+
+  .tab-btn.active {
+    background-color: var(--bg-white);
+    color: var(--primary-teal);
+    border-bottom: 3px solid var(--primary-teal);
+  }
+
+
+  .tab-content {
+    padding: 20px;
+    display: none;
+  }
+
+
+  .tab-content.active {
+    display: block;
+  }
+
+
+  .form-group {
+    margin-bottom: 12px;
+  }
+
+
+  label {
+    display: block;
+    font-weight: bold;
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+    color: var(--text-dark);
+  }
+
+
+  input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+  }
+
+
+  .calc-box {
+    background-color: #f0f9f9;
+    border: 2px solid var(--cyan-highlight);
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    margin: 15px 0;
+  }
+
+
+  .calc-box span {
+    display: block;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: var(--primary-teal);
+  }
+
+
+  .save-btn {
+    width: 100%;
+    background-color: var(--accent-pink);
+    color: var(--bg-white);
+    border: none;
+    padding: 12px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 0.85rem;
+  }
+
+
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+
+
+  th {
+    background-color: var(--primary-teal);
+    color: white;
+  }
+
+
+  .footer-notice {
+    text-align: center;
+    font-size: 0.75rem;
+    color: gray;
+    margin-top: 15px;
+  }
+</style>
+</head>
+<body>
+
+
+<div class="app-container">
+<header>
+  <h1 id="app-title">Vendor Pricing System</h1>
+  <button class="lang-btn" onclick="toggleLanguage()" id="lang-btn">Switch to Kiswahili</button>
+</header>
+
+
+<div class="nav-tabs">
+  <button class="tab-btn active" onclick="switchTab('add')" id="tab-add-btn">Add Product</button>
+  <button class="tab-btn" onclick="switchTab('view')" id="tab-view-btn">View Records</button>
+</div>
+
+
+<!-- Tab 1: Form -->
+<div id="tab-add" class="tab-content active">
+  <div class="form-group">
+    <label id="lbl-name">Product Name:</label>
+    <input type="text" id="inp-name" placeholder="e.g., Maandazi">
+  </div>
+  <div class="form-group">
+    <label id="lbl-buy">Purchase Price (TSh):</label>
+    <input type="number" id="inp-buy" oninput="calculatePrice()">
+  </div>
+  <div class="form-group">
+    <label id="lbl-trans">Transport Cost (TSh):</label>
+    <input type="number" id="inp-trans" oninput="calculatePrice()">
+  </div>
+  <div class="form-group">
+    <label id="lbl-profit">Desired Profit (TSh):</label>
+    <input type="number" id="inp-profit" oninput="calculatePrice()">
+  </div>
+
+
+  <div class="calc-box">
+    <label id="lbl-calc-title">Recommended Selling Price:</label>
+    <span id="calc-val">TSh 0.00</span>
+  </div>
+
+
+  <button class="save-btn" onclick="saveRecord()" id="btn-save">Save Product</button>
+  <p class="footer-notice" id="lbl-offline">Operates Offline | Inafanya Kazi Bila Mtandao</p>
+</div>
+
+
+<!-- Tab 2: Records Table -->
+<div id="tab-view" class="tab-content">
+  <table>
+    <thead>
+      <tr>
+        <th id="th-name">Product</th>
+        <th id="th-buy">Buy</th>
+        <th id="th-trans">Trans</th>
+        <th id="th-profit">Profit</th>
+        <th id="th-sell">Sell</th>
+      </tr>
+    </thead>
+    <tbody id="records-table-body">
+      <!-- Records will load dynamically here -->
+    </tbody>
+  </table>
+</div>
+</div>
+
+
+<script>
+let currentLang = 'en';
+
+
+const translations = {
+  en: {
+    title: "Vendor Pricing System",
+    tabAdd: "Add Product",
+    tabView: "View Records",
+    name: "Product Name:",
+    buy: "Purchase Price (TSh):",
+    trans: "Transport Cost (TSh):",
+    profit: "Desired Profit (TSh):",
+    calcTitle: "Recommended Selling Price:",
+    btnSave: "Save Product",
+    btnLang: "Switch to Kiswahili",
+    thName: "Product",
+    thBuy: "Buy",
+    thTrans: "Trans",
+    thProfit: "Profit",
+    thSell: "Sell",
+    offline: "Operates Offline | Inafanya Kazi Bila Mtandao",
+    errName: "Please enter a product name.",
+    errNum: "Please enter valid non-negative numbers.",
+    success: "Product saved successfully!"
+  },
+  sw: {
+    title: "Mfumo wa Bei za Muuzaji",
+    tabAdd: "Ongeza Bidhaa",
+    tabView: "Rekodi Zilizohifadhiwa",
+    name: "Jina la Bidhaa:",
+    buy: "Gharama ya Kununua (TSh):",
+    trans: "Gharama ya Usafiri (TSh):",
+    profit: "Lengo la Faida (TSh):",
+    calcTitle: "Bei ya Kuuzia Inayopendekezwa:",
+    btnSave: "Hifadhi Bidhaa",
+    btnLang: "Badili kwenda English",
+    thName: "Bidhaa",
+    thBuy: "Kununua",
+    thTrans: "Usafiri",
+    thProfit: "Faida",
+    thSell: "Kuuzia",
+    offline: "Operates Offline | Inafanya Kazi Bila Mtandao",
+    errName: "Tafadhali ingiza jina la bidhaa.",
+    errNum: "Tafadhali ingiza namba chanya zilizosahihi.",
+    success: "Taarifa zimehifadhiwa kikamilifu!"
+  }
+};
+
+
+function calculatePrice() {
+  const buy = parseFloat(document.getElementById('inp-buy').value) || 0;
+  const trans = parseFloat(document.getElementById('inp-trans').value) || 0;
+  const profit = parseFloat(document.getElementById('inp-profit').value) || 0;
+  const total = buy + trans + profit;
+  document.getElementById('calc-val').textContent = `TSh ${total.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
+  return total;
+}
+
+
+function saveRecord() {
+  const name = document.getElementById('inp-name').value.trim();
+  const buy = parseFloat(document.getElementById('inp-buy').value);
+  const trans = parseFloat(document.getElementById('inp-trans').value);
+  const profit = parseFloat(document.getElementById('inp-profit').value);
+  const t = translations[currentLang];
+
+
+  if (!name) {
+    alert(t.errName);
+    return;
+  }
+  if (isNaN(buy) || isNaN(trans) || isNaN(profit) || buy < 0 || trans < 0 || profit < 0) {
+    alert(t.errNum);
+    return;
+  }
+
+
+  const sell = buy + trans + profit;
+  const record = { name, buy, trans, profit, sell };
+
+
+  // Save to browser localStorage (SC6)
+  const records = JSON.parse(localStorage.getItem('vendorRecords') || '[]');
+  records.push(record);
+  localStorage.setItem('vendorRecords', JSON.stringify(records));
+
+
+  alert(t.success);
+
+
+  // Reset inputs
+  document.getElementById('inp-name').value = '';
+  document.getElementById('inp-buy').value = '';
+  document.getElementById('inp-trans').value = '';
+  document.getElementById('inp-profit').value = '';
+  document.getElementById('calc-val').textContent = 'TSh 0.00';
+
+
+  loadRecords();
+}
+
+
+function loadRecords() {
+  const records = JSON.parse(localStorage.getItem('vendorRecords') || '[]');
+  const tbody = document.getElementById('records-table-body');
+  tbody.innerHTML = '';
+
+
+  records.forEach(r => {
+    const row = `<tr>
+      <td>${r.name}</td>
+      <td>${r.buy.toFixed(2)}</td>
+      <td>${r.trans.toFixed(2)}</td>
+      <td>${r.profit.toFixed(2)}</td>
+      <td><strong>${r.sell.toFixed(2)}</strong></td>
+    </tr>`;
+    tbody.innerHTML += row;
+  });
+}
+
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+
+
+  if (tab === 'add') {
+    document.getElementById('tab-add').classList.add('active');
+    document.getElementById('tab-add-btn').classList.add('active');
+  } else {
+    document.getElementById('tab-view').classList.add('active');
+    document.getElementById('tab-view-btn').classList.add('active');
+    loadRecords();
+  }
+}
+
+
+function toggleLanguage() {
+  currentLang = currentLang === 'en' ? 'sw' : 'en';
+  const t = translations[currentLang];
+
+
+  document.getElementById('app-title').textContent = t.title;
+  document.getElementById('lang-btn').textContent = t.btnLang;
+  document.getElementById('tab-add-btn').textContent = t.tabAdd;
+  document.getElementById('tab-view-btn').textContent = t.tabView;
+  document.getElementById('lbl-name').textContent = t.name;
+  document.getElementById('lbl-buy').textContent = t.buy;
+  document.getElementById('lbl-trans').textContent = t.trans;
+  document.getElementById('lbl-profit').textContent = t.profit;
+  document.getElementById('lbl-calc-title').textContent = t.calcTitle;
+  document.getElementById('btn-save').textContent = t.btnSave;
+  document.getElementById('lbl-offline').textContent = t.offline;
+  document.getElementById('th-name').textContent = t.thName;
+  document.getElementById('th-buy').textContent = t.thBuy;
+  document.getElementById('th-trans').textContent = t.thTrans;
+  document.getElementById('th-profit').textContent = t.thProfit;
+  document.getElementById('th-sell').textContent = t.thSell;
+}
+
+
+// Initial load
+loadRecords();
+</script>
+
+
+</body>
+</html>

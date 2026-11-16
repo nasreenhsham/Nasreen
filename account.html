@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Account — BeiSmart</title>
+ <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+ <div class="app-shell">
+   <aside class="sidebar">
+     <a class="brand" href="dashboard.html">
+       <span class="brand-mark"></span>
+       <span data-i18n="brand">BeiSmart</span>
+     </a>
+     <nav class="side-nav">
+       <a href="dashboard.html" data-i18n="dashboard">Menu</a>
+       <a href="calculate.html" data-i18n="calculate">Price calculator</a>
+       <a href="records.html" data-i18n="records">Saved records</a>
+       <a class="active" href="account.html" data-i18n="account">My account</a>
+       <a href="#" onclick="logoutUser(); return false;" data-i18n="logout">Log out</a>
+     </nav>
+   </aside>
+   <main class="main">
+     <div class="main-top">
+       <h1 data-i18n="account">My account</h1>
+       <button class="btn btn-cyan" type="button" onclick="toggleLang()" id="langLabel">SW</button>
+     </div>
+     <form class="panel" onsubmit="saveAccount(event)">
+       <p class="muted">Week 9: keep vendor details and feedback in one place.</p>
+       <div id="errorBox" class="error"></div>
+       <div id="successBox" class="success"></div>
+       <label data-i18n="name">Full name</label>
+       <input id="name" type="text">
+       <label data-i18n="email">Email</label>
+       <input id="email" type="email" readonly>
+       <label data-i18n="location">Where you sell</label>
+       <select id="market">
+         <option value="Kariakoo">Kariakoo</option>
+         <option value="Mwenge">Mwenge</option>
+         <option value="Temeke">Temeke</option>
+         <option value="Mwananyamala">Mwananyamala</option>
+         <option value="Other">Other</option>
+       </select>
+       <label data-i18n="password">Password</label>
+       <input id="password" type="password" placeholder="Leave blank to keep the same password">
+       <label data-i18n="notes">Notes from vendors / feedback</label>
+       <textarea id="notes" rows="4"></textarea>
+       <div class="form-actions">
+         <button class="btn btn-pink" type="submit" data-i18n="saveAccount">Save account details</button>
+         <button class="btn btn-ghost" type="button" onclick="logoutUser()" data-i18n="logout">Log out</button>
+       </div>
+     </form>
+   </main>
+ </div>
+ <script src="js/storage.js"></script>
+ <script src="js/lang.js"></script>
+ <script src="js/auth.js"></script>
+ <script src="js/app.js"></script>
+ <script>
+   requireLogin();
+   applyLang();
+   fillAccountForm();
+ </script>
+</body>
+</html>
