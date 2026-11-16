@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Price calculator — BeiSmart</title>
+ <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+ <div class="app-shell">
+   <aside class="sidebar">
+     <a class="brand" href="dashboard.html">
+       <span class="brand-mark"></span>
+       <span data-i18n="brand">BeiSmart</span>
+     </a>
+     <nav class="side-nav">
+       <a href="dashboard.html" data-i18n="dashboard">Menu</a>
+       <a class="active" href="calculate.html" data-i18n="calculate">Price calculator</a>
+       <a href="records.html" data-i18n="records">Saved records</a>
+       <a href="account.html" data-i18n="account">My account</a>
+       <a href="#" onclick="logoutUser(); return false;" data-i18n="logout">Log out</a>
+     </nav>
+   </aside>
+   <main class="main">
+     <div class="main-top">
+       <h1 data-i18n="calculate">Price calculator</h1>
+       <button class="btn btn-cyan" type="button" onclick="toggleLang()" id="langLabel">SW</button>
+     </div>
+     <div class="panel">
+       <p class="muted" data-i18n="calcHelp">Selling price = purchase + transport + profit.</p>
+       <div id="calcError" class="error"></div>
+       <div id="calcSuccess" class="success"></div>
+       <label data-i18n="item">Item name</label>
+       <input id="item" type="text">
+       <div class="row-2">
+         <div>
+           <label data-i18n="purchase">Purchase price (TZS)</label>
+           <input id="purchase" type="number" min="0" step="1">
+         </div>
+         <div>
+           <label data-i18n="transport">Transport cost (TZS)</label>
+           <input id="transport" type="number" min="0" step="1">
+         </div>
+       </div>
+       <div class="row-2">
+         <div>
+           <label data-i18n="profitType">Profit type</label>
+           <select id="profitType">
+             <option value="amount">TZS</option>
+             <option value="percent">%</option>
+           </select>
+         </div>
+         <div>
+           <label data-i18n="desiredProfit">Desired profit</label>
+           <input id="desiredProfit" type="number" min="0" step="1">
+         </div>
+       </div>
+       <div class="form-actions">
+         <button class="btn btn-pink" type="button" onclick="calculatePrice()" data-i18n="compute">Calculate selling price</button>
+         <button class="btn btn-cyan" type="button" onclick="saveLastCalc()" data-i18n="saveRecord">Save this record</button>
+       </div>
+       <div id="resultBox" class="result-box" style="display:none;">
+         <h3>Result</h3>
+         <div class="result-grid">
+           <p><span data-i18n="totalCost">Total cost</span><br><strong id="outCost">TZS 0</strong></p>
+           <p><span data-i18n="sellingPrice">Suggested selling price</span><br><strong id="outSell">TZS 0</strong></p>
+           <p><span data-i18n="profit">Profit</span><br><strong id="outProfit">TZS 0</strong></p>
+         </div>
+       </div>
+     </div>
+   </main>
+ </div>
+ <script src="js/storage.js"></script>
+ <script src="js/lang.js"></script>
+ <script src="js/auth.js"></script>
+ <script src="js/app.js"></script>
+ <script>
+   requireLogin();
+   applyLang();
+ </script>
+</body>
+</html>
